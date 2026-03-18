@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SinemaTV PRO – FULL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{--red:#E50914;--black:#080808}
+body{background:var(--black);color:#fff;margin:0;padding:10px;font-family:sans-serif;overflow:hidden}
+.nav-item{cursor:pointer;border-radius:12px;transition:.15s}
+.nav-item:focus{outline:none;background:var(--red);transform:scale(1.05)}
+.full-modal{display:none!important;position:fixed;inset:0;background:rgba(0,0,0,.97);overflow-y:auto}
+.show-modal{display:flex!important}
+#results{height:calc(100vh - 170px);overflow-y:auto}
+</style>
+</head>
+<body onload="loadShowcase()">
+
+<header class="text-center mb-4">
+<h1 class="text-3xl font-black italic text-red-600">SinemaTV PRO</h1>
+<div class="flex gap-2 mt-3">
+<input id="searchInput" placeholder="Film / Dizi / Oyuncu"
+ class="flex-1 p-3 bg-[#1a1a1a] rounded-xl nav-item">
+<button onclick="searchContent()"
+ class="px-6 bg-red-600 rounded-xl font-bold nav-item">ARA</button>
+</div>
+</header>
+
+<div id="results" class="grid grid-cols-3 sm:grid-cols-5 gap-4"></div>
+
+<div id="videoLayer" class="fixed inset-0 bg-black z-[3000] hidden flex-col">
+<button onclick="closePlayer()" class="m-3 bg-white/10 px-6 py-2 rounded-full nav-item">← KAPAT</button>
+<video id="html5Player" class="flex-1 w-full" controls></video>
+</div>
+
+<script>
+let currentTitle = "";
+
+async function loadShowcase(){
+  // Demo trending verisi
+  results.innerHTML = "<p class='text-center col-span-3'>Trending yükleniyor...</p>";
+}
+
+async function searchContent(){
+  const query = searchInput.value.trim();
+  if(!query) return;
+  currentTitle = query;
+  results.innerHTML = "<p class='text-center col-span-3'>Aranıyor...</p>";
+  // demo, fetch URL backend'e bağlanacak
+  results.innerHTML = `<div class='col-span-3 text-center'>Sonuçlar için backend hazır</div>`;
+}
+
+function playVideo(url){
+  html5Player.src = url;
+  videoLayer.style.display = "flex";
+}
+
+function closePlayer(){
+  html5Player.pause();
+  html5Player.src = "";
+  videoLayer.style.display = "none";
+}
+</script>
+</body>
+</html>
